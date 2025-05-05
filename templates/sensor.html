@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OWEN - Organic Waste Energy - Sensor</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f3f4f6; /* Light gray background seperti notifikasi */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .value-fade {
+        transition: opacity 0.3s ease-in-out;
+        opacity: 1;
+      }
+
+      .value-fade.fade-out {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="bg-green-600 p-4 flex items-center shadow-md">
+      <button onclick="goBack()" class="mr-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="white"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12m7.5 7.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+      <h1 class="text-white text-lg font-semibold">SENSOR</h1>
+      <div class="flex-grow"></div>
+      <div class="logo">
+        <img src="/static/owenn.png" alt="Logo OWEN" class="w-16" />
+      </div>
+    </div>
+
+    <div
+      class="container max-w-md mx-auto p-6 flex-1 flex flex-col justify-between"
+    >
+      <div class="content flex-grow space-y-4">
+        <h6 class="text-xl font-semibold text-gray-800 mb-4">Status Sensor</h6>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white shadow rounded-md p-5">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3">
+              Sensor Suhu
+            </h2>
+            <div class="text-gray-600 text-sm">
+              <div>
+                Nilai:
+                <span
+                  class="font-bold text-blue-500 value-fade"
+                  id="suhu-nilai"
+                ></span
+                >°C
+              </div>
+              <div>
+                Kelembaban:
+                <span
+                  class="font-bold text-blue-500 value-fade"
+                  id="kelembaban-nilai"
+                ></span
+                >%
+              </div>
+              <div>
+                Status:
+                <span
+                  class="font-semibold text-red-500"
+                  id="suhu-status"
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white shadow rounded-md p-5">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3">
+              Sensor Turbidity
+            </h2>
+            <div class="text-gray-600 text-sm">
+              <div>
+                Nilai:
+                <span
+                  class="font-bold text-yellow-500 value-fade"
+                  id="turbidity-nilai"
+                ></span
+                >%
+              </div>
+              <div>
+                Status:
+                <span
+                  class="font-semibold text-red-500"
+                  id="turbidity-status"
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white shadow rounded-md p-5">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3">Sensor PH</h2>
+            <div class="text-gray-600 text-sm">
+              <div>
+                Nilai:
+                <span
+                  class="font-bold text-green-500 value-fade"
+                  id="ph-nilai"
+                ></span>
+              </div>
+              <div>
+                Status:
+                <span class="font-semibold text-red-500" id="ph-status"></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white shadow rounded-md p-5">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3">Sensor INA</h2>
+            <div class="text-gray-600 text-sm">
+              <div>
+                Nilai:
+                <span
+                  class="font-bold text-purple-500 value-fade"
+                  id="ina-nilai"
+                ></span>
+                V
+              </div>
+              <div>
+                Status:
+                <span class="font-semibold text-red-500" id="ina-status"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function updateSensorValue(elementId, newValue, unit = "") {
+        const element = document.getElementById(elementId);
+        element.classList.add("fade-out");
+        setTimeout(() => {
+          element.textContent = newValue + unit;
+          element.classList.remove("fade-out");
+        }, 300); // Durasi animasi fade-out
+      }
+
+      function updateSensorStatus(elementId, isOnline) {
+        const element = document.getElementById(elementId);
+        if (isOnline) {
+          element.textContent = "Online";
+          element.className = "font-semibold text-green-500";
+        } else {
+          element.textContent = "Offline";
+          element.className = "font-semibold text-red-500";
+        }
+      }
+
+      function updateData() {
+        // Asumsi ada endpoint /data yang mengembalikan data sensor dalam format JSON
+        fetch("/latest_data")
+          .then((response) => response.json())
+          .then((data) => {
+            updateSensorValue("suhu-nilai", data.suhu, " °C");
+            updateSensorValue("kelembaban-nilai", data.kelembaban, " %");
+            updateSensorValue("turbidity-nilai", data.turbidity, " %");
+            updateSensorValue("ph-nilai", data.ph);
+            updateSensorValue("ina-nilai", data.tegangan, " V");
+
+            // Cek status online berdasarkan nilai
+            updateSensorStatus(
+              "suhu-status",
+              data.suhu !== "-" && data.kelembaban !== "-"
+            );
+            updateSensorStatus("turbidity-status", data.turbidity !== "-");
+            updateSensorStatus("ph-status", data.ph !== "-");
+            updateSensorStatus("ina-status", data.tegangan !== "-");
+          })
+          .catch((error) => {
+            console.error("Gagal mengambil data sensor:", error);
+            updateSensorStatus("suhu-status", false);
+            updateSensorStatus("turbidity-status", false);
+            updateSensorStatus("ph-status", false);
+            updateSensorStatus("ina-status", false);
+          });
+      }
+
+      // Panggil updateData setiap beberapa detik (misalnya 5 detik)
+      setInterval(updateData, 5000);
+      updateData(); // Panggil pertama kali saat halaman dimuat
+
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

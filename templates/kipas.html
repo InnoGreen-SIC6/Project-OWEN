@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OWEN - Organic Waste Energy - Kipas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f3f4f6; /* Light gray background seperti notifikasi */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Animasi angka */
+      @keyframes count {
+        from {
+          opacity: 0.5;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-count {
+        animation: count 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="bg-green-600 p-4 flex items-center shadow-md">
+      <button onclick="goBack()" class="mr-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="white"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12m7.5 7.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+      <h1 class="text-white text-lg font-semibold">KIPAS</h1>
+      <div class="flex-grow"></div>
+      <div class="logo">
+        <img src="/static/owenn.png" alt="Logo OWEN" class="w-16" />
+      </div>
+    </div>
+
+    <div
+      class="container max-w-md mx-auto p-6 flex-1 flex flex-col justify-start items-center space-y-4 mt-4"
+    >
+      <div class="bg-white shadow rounded-lg p-4 w-full text-center">
+        <h2
+          class="text-xl font-semibold text-gray-700 flex items-center justify-center space-x-2"
+        >
+          KIPAS
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256 256"
+            class="w-6 h-6"
+          >
+            <rect width="256" height="256" fill="none" />
+            <circle
+              cx="128"
+              cy="128"
+              r="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16"
+            />
+            <path
+              d="M104.31,124.14a52,52,0,1,1,47.69-92l-18.17,72.54"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16"
+            />
+            <path
+              d="M136.5,150.45A52,52,0,1,1,33,155.13l71.91-20.54"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16"
+            />
+            <path
+              d="M143.19,109.41A52,52,0,1,1,199,196.7l-53.74-52"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16"
+            />
+          </svg>
+        </h2>
+      </div>
+
+      <div class="bg-red-100 rounded-lg p-3 w-full text-center text-sm">
+        <div>
+          Suhu Wadah Saat Ini:
+          <span class="font-bold text-red-500 animate-count" id="suhu-wadah"
+            >38</span
+          >°C
+        </div>
+      </div>
+
+      <div class="bg-blue-100 rounded-lg p-3 w-full text-center text-sm">
+        <div>Kipas Aktif (Trigger suhu > 37°C)</div>
+      </div>
+
+      <div class="bg-green-100 rounded-lg p-3 w-full text-center text-sm">
+        <div>
+          Status: <span class="font-semibold text-green-500">AKTIF</span> sejak
+          12:35 WIB
+        </div>
+      </div>
+
+      <div class="flex justify-around w-full mt-6">
+        <button
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-200 ease-in-out flex flex-col items-center"
+        >
+          <div
+            class="w-12 h-12 rounded-full bg-black border-2 border-white"
+          ></div>
+          <span class="mt-2 text-sm">Aktifkan Manual</span>
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-200 ease-in-out flex flex-col items-center"
+        >
+          <div
+            class="w-12 h-12 rounded-full bg-black border-2 border-white"
+          ></div>
+          <span class="mt-2 text-sm">Matikan Manual</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+
+      function animateValue(id, end) {
+        const obj = document.getElementById(id);
+        let start = parseFloat(obj.innerText);
+        let duration = 1000; // Durasi animasi dalam milisekon
+        let startTime = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          obj.innerText = Math.floor(progress * (end - start) + start);
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        }
+        window.requestAnimationFrame(step);
+      }
+
+      // Data kipas (simulasi)
+      const kipasData = {
+        suhuWadah: 38,
+      };
+
+      // Memulai animasi (jika diperlukan)
+      // animateValue("suhu-wadah", kipasData.suhuWadah);
+    </script>
+  </body>
+</html>

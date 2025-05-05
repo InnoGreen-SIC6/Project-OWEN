@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OWEN - Organic Waste Energy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="bg-green-600 p-4 flex items-center justify-between shadow-md">
+      <div></div>
+      <div class="logo">
+        <img src="/static/owenn.png" alt="Logo OWEN" class="w-24" />
+      </div>
+      <div></div>
+    </div>
+
+    <div
+      class="container max-w-md mx-auto p-6 flex-1 flex flex-col justify-between"
+    >
+      <div class="flex flex-col items-center justify-center space-y-6">
+        <h1 class="text-3xl font-bold text-green-600">Kategori Menu</h1>
+        <div class="grid grid-cols-2 gap-4 w-full">
+          <a
+            href="{{ url_for('sensor') }}"
+            class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center hover:shadow-lg transition duration-200"
+          >
+            <p class="text-4xl">📡</p>
+            <span class="mt-2 font-semibold text-gray-700">Sensor</span>
+          </a>
+          <a
+            href="{{ url_for('pasokan') }}"
+            class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center hover:shadow-lg transition duration-200"
+          >
+            <p class="text-4xl">📥</p>
+            <span class="mt-2 font-semibold text-gray-700">Pasokan</span>
+          </a>
+          <a
+            href="{{ url_for('kipas') }}"
+            class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center hover:shadow-lg transition duration-200"
+          >
+            <p class="text-4xl">💨</p>
+            <span class="mt-2 font-semibold text-gray-700">Kipas</span>
+          </a>
+          <a
+            href="{{ url_for('pembuangan') }}"
+            class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center hover:shadow-lg transition duration-200"
+          >
+            <p class="text-4xl">♻</p>
+            <span class="mt-2 font-semibold text-gray-700">Pembuangan</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navigation bg-green-600 py-2 rounded-md shadow">
+      <div class="flex justify-around items-center">
+        <a
+          href="{{ url_for('index') }}"
+          class="text-white transition duration-200 ease-in-out hover:scale-110 hover:animate-wobble"
+        >
+          <div class="flex flex-col items-center">
+            <span class="text-xl">🏠</span>
+            <span class="text-xs">Beranda</span>
+          </div>
+        </a>
+
+        <a
+          href="{{ url_for('menu') }}"
+          class="text-white transition duration-200 ease-in-out hover:scale-110 hover:animate-wobble"
+        >
+          <div class="flex flex-col items-center">
+            <span class="text-xl">📊</span>
+            <span class="text-xs">Menu</span>
+          </div>
+        </a>
+
+        <a
+          href="{{ url_for('notif') }}"
+          class="text-white transition duration-200 ease-in-out hover:scale-110 hover:animate-wobble"
+        >
+          <div class="flex flex-col items-center">
+            <span class="text-xl">🔔</span>
+            <span class="text-xs">Notifikasi</span>
+          </div>
+        </a>
+
+        <a
+          href="{{ url_for('profil') }}"
+          class="text-white transition duration-200 ease-in-out hover:scale-110 hover:animate-wobble"
+        >
+          <div class="flex flex-col items-center">
+            <span class="text-xl">👤</span>
+            <span class="text-xs">Profil</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

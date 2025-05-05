@@ -1,0 +1,9 @@
+{
+    "latest_data": {
+        "suhu": 33.53,
+        "kelembaban": 56.11,
+        "tegangan": 11.76,
+        "turbidity": 51.94,
+        "ph": 7.08
+    }
+}

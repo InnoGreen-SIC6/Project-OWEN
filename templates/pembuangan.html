@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OWEN - Organic Waste Energy - Pembuangan</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f3f4f6;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Animasi angka */
+      @keyframes count {
+        from {
+          opacity: 0.5;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-count {
+        animation: count 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="bg-green-600 p-4 flex items-center shadow-md">
+      <button onclick="goBack()" class="mr-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="white"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12m7.5 7.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+      <h1 class="text-white text-lg font-semibold">PEMBUANGAN</h1>
+      <div class="flex-grow"></div>
+      <div class="logo">
+        <img src="/static/owenn.png" alt="Logo OWEN" class="w-16" />
+      </div>
+    </div>
+
+    <div
+      class="container max-w-md mx-auto p-6 flex-1 flex flex-col justify-start space-y-4 mt-4"
+    >
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center space-x-2 mb-3">
+          <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+          <h2 class="text-md font-semibold text-gray-700">AIR GARAM</h2>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-orange-100 rounded-full p-3 text-center text-sm">
+            Kondisi Air Saat Ini:
+            <span
+              class="font-bold text-orange-500 animate-count"
+              id="air-garam-kondisi"
+              >Keruh (0.2v)</span
+            >
+          </div>
+          <div
+            class="bg-green-600 rounded-full p-3 text-center text-white font-semibold"
+          >
+            Auto Buang Aktif
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 256 256"
+              class="w-6 h-6 inline-block ml-2"
+            >
+              <rect width="256" height="256" fill="none" />
+              <polyline
+                points="88 136 112 160 168 104"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="16"
+              />
+              <circle
+                cx="128"
+                cy="128"
+                r="96"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="16"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center space-x-2 mb-3">
+          <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+          <h2 class="text-md font-semibold text-gray-700">AIR LIMBAH</h2>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-blue-100 rounded-full p-3 text-center text-sm">
+            Kondisi Air Saat Ini:
+            <span
+              class="font-bold text-blue-500 animate-count"
+              id="air-limbah-kondisi"
+              >Jernih (0.8v)</span
+            >
+          </div>
+          <div
+            class="bg-red-500 rounded-full p-3 text-center text-white font-semibold"
+          >
+            Auto Buang Berhenti
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 inline-block ml-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+
+      function animateValue(id, end) {
+        const obj = document.getElementById(id);
+        let start = parseFloat(obj.innerText.split("(")[1].replace("v)", ""));
+        let duration = 1000; // Durasi animasi dalam milisekon
+        let startTime = null;
+        const prefix = obj.innerText.split(":")[0] + ": ";
+        const suffix = "v)";
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const currentValue = (progress * (end - start) + start).toFixed(1);
+          obj.innerText =
+            prefix +
+            obj.innerText.split("(")[0].split(":")[1].trim() +
+            ` (${currentValue}${suffix})`;
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        }
+        window.requestAnimationFrame(step);
+      }
+
+      // Data pembuangan (simulasi)
+      const pembuanganData = {
+        airGaramKondisi: 0.2,
+        airLimbahKondisi: 0.8,
+      };
+
+      // Memulai animasi (jika diperlukan)
+      // animateValue("air-garam-kondisi", pembuanganData.airGaramKondisi);
+      // animateValue("air-limbah-kondisi", pembuanganData.airLimbahKondisi);
+    </script>
+  </body>
+</html>
